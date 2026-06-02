@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Equity Solutions Command Center™</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #1e40af;
+            --secondary: #0284c7;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --dark: #0f172a;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Management Navbar */
+        .top-navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+        }
+
+        .brand-logo span {
+            color: var(--secondary);
+        }
+
+        .search-bar-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-bar-container input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            background-color: var(--light-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar-container input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .search-bar-container svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+        }
+
+        /* Header Arena */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f172a 100%);
+            color: white;
+            padding: 50px 20px 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            margin: 12px 0 0 0;
+            font-size: 16px;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        /* Live Metrics Counters Banner */
+        .metrics-bar {
+            max-width: 1200px;
+            width: 100%;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .metric-pill {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        .metric-pill .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .metric-pill .count {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Workspace Grid Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .grid-section {
+            margin-bottom: 45px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--secondary);
+            margin-bottom: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            margin-left: 15px;
+            height: 1px;
+            background-color: var(--border);
+        }
+
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+        }
+
+        .hub-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .hub-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        /* Left Indicator Color Accents */
+        .hub-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--secondary);
+        }
+
+        .hub-card.acquisition::before { background-color: var(--primary); }
+        .hub-card.underwriting::before { background-color: var(--secondary); }
+        .hub-card.disposition::before { background-color: var(--success); }
+        .hub-card.strategy::before { background-color: var(--purple); }
+        .hub-card.training::before { background-color: var(--warning); }
+        .hub-card.future::before { background-color: #cbd5e1; }
+
+        .card-content h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: var(--dark);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-content p {
+            margin: 0 0 24px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Footer Tray of Card */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            background-color: var(--light-bg);
+            border-radius: 6px;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            background-color: var(--light-bg);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            border: 1px solid var(--border);
+            transition: all 0.15s ease;
+        }
+
+        .btn-link:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-link svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Future Slots Layout Template */
+        .future-card {
+            background: rgba(248, 250, 252, 0.6);
+            border: 2px dashed #cbd5e1;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 175px;
+        }
+
+        .future-card:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--text-muted);
+        }
+
+        .future-card svg {
+            width: 28px;
+            height: 28px;
+            fill: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .future-card span {
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* System Signature Footer */
+        footer {
+            background-color: white;
+            border-top: 1px solid var(--border);
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-content h4 {
+            margin: 0 0 4px 0;
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.3px;
+        }
+
+        .footer-content .owner-name {
+            font-size: 14px;
+            color: var(--dark);
+            margin: 0 0 6px 0;
+            font-weight: 600;
+        }
+
+        .footer-content .title {
+            font-size: 12px;
+            color: var(--secondary);
+            margin: 0 0 14px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-content .email {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0 0 24px 0;
+        }
+
+        .social-channels {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13.5px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .social-btn.youtube {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fee2e2;
+        }
+
+        .social-btn.youtube:hover {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .social-btn.facebook {
+            background-color: #eff6ff;
+            color: #2563eb;
+            border: 1px solid #dbeafe;
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .metrics-bar {
+                grid-template-columns: repeat(2, 1fr);
+                margin-top: 20px;
+            }
+            .top-navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            .search-bar-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Management Bar -->
+    <nav class="top-navbar">
+        <div class="brand-logo">
+            ⚡ SWIFT <span>COMMAND</span>
+        </div>
+        <div class="search-bar-container">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="workspaceSearch" placeholder="Filter command apps..." onkeyup="filterWorkspace()">
+        </div>
+    </nav>
+
+    <!-- Master Header Ecosystem Title -->
+    <header>
+        <h1>SWIFT EQUITY SOLUTIONS COMMAND CENTER™</h1>
+        <p>Enterprise Real Estate Acquisition, Underwriting & Asset Disposition Ecosystem</p>
+    </header>
+
+    <!-- Ecosystem Metric Block Readouts -->
+    <section class="metrics-bar">
+        <div class="metric-pill">
+            <span class="label">Acquisitions</span>
+            <span class="count">3</span>
+        </div>
+        <div class="metric-pill">
+            <span class="label">Underwriting</span>
+            <span class="count">1</span>
+        </div>
+        <div class="metric-pill">
+            <span class="label">Dispositions</span>
+            <span class="count">1</span>
+        </div>
+        <div class="metric-pill">
+            <span class="label">Strategy & Intel</span>
+            <span class="count">3</span>
+        </div>
+    </section>
+
+    <!-- Central Interactive Board Array -->
+    <div class="container">
+
+        <!-- Section: Acquisitions & Pipeline -->
+        <div class="grid-section section-group">
+            <div class="section-title">Acquisitions & Pipeline Architecture</div>
+            <div class="hub-grid">
+                
+                <div class="hub-card acquisition">
+                    <div class="card-content">
+                        <h3>SWIFT LEAD MANAGER HUB™</h3>
+                        <p>Centralized intake core engine engineered to clean, segment, and track hot wholesale opportunities inside incoming data channels.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Intake Core</span>
+                        <a href="https://swiftie83.github.io/SWIFT-LEAD-MANAGER-HUB-/" target="_blank" class="btn-link">
+                            Launch Hub <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hub-card acquisition">
+                    <div class="card-content">
+                        <h3>Swift Offer CRM-V20</h3>
+                        <p>Advanced transaction core tracking property portfolios, workflow assignments, dynamic follow-up dates, and active pipeline statuses.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">System CRM</span>
+                        <a href="https://swiftie83.github.io/Swiftie83-Swift-Offer-CRM-V5/" target="_blank" class="btn-link">
+                            Launch CRM <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hub-card acquisition">
+                    <div class="card-content">
+                        <h3>Seller Acquisition Workspace</h3>
+                        <p>Dynamic live interface optimized for inbound/outbound call reps to manage negotiations and secure properties on the line.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Sales Desk</span>
+                        <a href="https://swiftie83.github.io/Swift-Seller-Negotiation-Dashboard/" target="_blank" class="btn-link">
+                            Open Desk <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section: Underwriting & Evaluation -->
+        <div class="grid-section section-group">
+            <div class="section-title">Underwriting & Evaluation Portals</div>
+            <div class="hub-grid">
+
+                <div class="hub-card underwriting">
+                    <div class="card-content">
+                        <h3>Property Offer Worksheet</h3>
+                        <p>Integrated mathematical underwriting calculator with target cash spreads, repair line structures, and automated proposal tables.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Underwriting</span>
+                        <a href="https://swiftie83.github.io/Property-Offer-Worksheet/" target="_blank" class="btn-link">
+                            Run Numbers <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section: Dispositions -->
+        <div class="grid-section section-group">
+            <div class="section-title">Asset Dispositions & Clearing</div>
+            <div class="hub-grid">
+
+                <div class="hub-card disposition">
+                    <div class="card-content">
+                        <h3>Swift Disposal Hub</h3>
+                        <p>Distribution hub designed to instantly market contracted inventory directly to top corporate hedge funds and matching cash buyer targets.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Dispo Matrix</span>
+                        <a href="https://swiftie83.github.io/Swift-Disposal-Hub/" target="_blank" class="btn-link">
+                            Launch Matrix <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section: Strategy & Outreach Dominance -->
+        <div class="grid-section section-group">
+            <div class="section-title">Strategic Channels & Agent Outreach</div>
+            <div class="hub-grid">
+
+                <div class="hub-card strategy">
+                    <div class="card-content">
+                        <h3>SWIFT A.G.E.N.T. DOMINATION™</h3>
+                        <p>Advanced institutional system platform deployed to identify, nurture, and dominate relationships with on-market real estate agents.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Agent System</span>
+                        <a href="https://swiftie83.github.io/SWIFT-A.G.E.N.T.-DOMINATION-/" target="_blank" class="btn-link">
+                            Deploy System <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section: System Intelligence -->
+        <div class="grid-section section-group">
+            <div class="section-title">System Playbooks & Tactical Blueprints</div>
+            <div class="hub-grid">
+
+                <div class="hub-card training">
+                    <div class="card-content">
+                        <h3>The Swift Playbook</h3>
+                        <p>Master operational framework database tracking internal business SOP layouts, administrative workflows, and organizational guidelines.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">SOP Manual</span>
+                        <a href="https://swiftie83.github.io/TheSwiftplaybook/" target="_blank" class="btn-link">
+                            Open Playbook <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hub-card training">
+                    <div class="card-content">
+                        <h3>🛡️ Swift Rebuttal Blueprint</h3>
+                        <p>Secured objection matrix detailing rapid responses, negotiation script paths, and answers to convert property owner stalls.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Sales Guide</span>
+                        <a href="https://docs.google.com/document/d/1QWwFLUkfi3o2w2SMQVPMJ5NFdWA4Zpcs-36NOcgJgGA/edit?tab=t.0#heading=h.5h636usblbgq" target="_blank" class="btn-link">
+                            View Blueprint <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section: Future Allocations Expansion -->
+        <div class="grid-section">
+            <div class="section-title">Future Expansion Allocations</div>
+            <div class="hub-grid">
+                
+                <div class="hub-card future">
+                    <div class="future-card">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <span>Automated Dialer Node</span>
+                    </div>
+                </div>
+
+                <div class="hub-card future">
+                    <div class="future-card">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <span>Legal Contract Library</span>
+                    </div>
+                </div>
+
+                <div class="hub-card future">
+                    <div class="future-card">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <span>Market Analysis Radar</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Corporate Operations Footer -->
+    <footer>
+        <div class="footer-content">
+            <h4>Swift Equity Solutions LLC</h4>
+            <div class="owner-name">Wilkens Bellebranche</div>
+            <div class="title">CEO / Founder</div>
+            <div class="email">📧 Communication Portal: info.swiftequitysolutions@gmail.com</div>
+            
+            <div class="social-channels">
+                <a href="https://www.youtube.com/@swiftequitysolutions" target="_blank" class="social-btn youtube">
+                    🎥 YouTube: @swiftequitysolutions
+                </a>
+                <a href="https://www.facebook.com/groups/3018077421674529/?rdid=E8SsLztS7VtPaJCJ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fg%2F1AfaCVgUmP#" target="_blank" class="social-btn facebook">
+                    👥 Facebook Group: Swift Equity Solutions
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Instant Workspace Search Script Logic -->
+    <script>
+        function filterWorkspace() {
+            let searchInput = document.getElementById('workspaceSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('hub-card');
+            let groups = document.getElementsByClassName('section-group');
+
+            // Handle App Cards Filtering
+            for (let i = 0; i < cards.length; i++) {
+                if (!cards[i].classList.contains('future')) {
+                    let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                    let desc = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+                    
+                    if (title.includes(searchInput) || desc.includes(searchInput)) {
+                        cards[i].style.display = "flex";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }
+            }
+
+            // Collapse rows completely if no visible matches exist
+            for (let j = 0; j < groups.length; j++) {
+                let innerCards = groups[j].getElementsByClassName('hub-card');
+                let validMatch = 0;
+                for (let k = 0; k < innerCards.length; k++) {
+                    if (innerCards[k].style.display !== 'none') {
+                        validMatch++;
+                    }
+                }
+                if (validMatch === 0 && searchInput !== "") {
+                    groups[j].style.display = 'none';
+                } else {
+                    groups[j].style.display = 'block';
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
