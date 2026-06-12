@@ -16,6 +16,7 @@
             --light-bg: #f8fafc;
             --border: #e2e8f0;
             --text-muted: #64748b;
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -71,7 +72,7 @@
             border-radius: 8px;
             color: var(--dark);
             font-size: 14px;
-            transition: all 0.2s ease;
+            transition: var(--transition-smooth);
         }
 
         .search-bar-container input:focus {
@@ -89,6 +90,7 @@
             width: 16px;
             height: 16px;
             fill: var(--text-muted);
+            pointer-events: none;
         }
 
         /* Header Arena */
@@ -160,6 +162,7 @@
 
         .grid-section {
             margin-bottom: 45px;
+            transition: var(--transition-smooth);
         }
 
         .section-title {
@@ -183,7 +186,7 @@
 
         .hub-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 24px;
         }
 
@@ -195,10 +198,15 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        /* Modern Filter Handling Using Hidden State */
+        .hub-card[hidden] {
+            display: none !important;
         }
 
         .hub-card:hover {
@@ -247,6 +255,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
         }
 
         .badge {
@@ -273,7 +282,7 @@
             font-size: 13.5px;
             font-weight: 700;
             border: 1px solid var(--border);
-            transition: all 0.15s ease;
+            transition: var(--transition-smooth);
         }
 
         .btn-link:hover {
@@ -299,6 +308,8 @@
             justify-content: center;
             text-align: center;
             min-height: 175px;
+            width: 100%;
+            border-radius: 12px;
         }
 
         .future-card:hover {
@@ -328,6 +339,7 @@
             border-top: 1px solid var(--border);
             padding: 45px 20px;
             text-align: center;
+            margin-top: auto;
         }
 
         .footer-content {
@@ -382,7 +394,7 @@
             font-size: 13.5px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: var(--transition-smooth);
         }
 
         .social-btn.youtube {
@@ -425,24 +437,21 @@
 </head>
 <body>
 
-    <!-- Dynamic Management Bar -->
     <nav class="top-navbar">
         <div class="brand-logo">
             ⚡ SWIFT <span>COMMAND</span>
         </div>
         <div class="search-bar-container">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" id="workspaceSearch" placeholder="Filter command apps..." onkeyup="filterWorkspace()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="workspaceSearch" placeholder="Filter command apps...">
         </div>
     </nav>
 
-    <!-- Master Header Ecosystem Title -->
     <header>
         <h1>SWIFT EQUITY SOLUTIONS COMMAND CENTER™</h1>
         <p>Enterprise Real Estate Acquisition, Underwriting & Asset Disposition Ecosystem</p>
     </header>
 
-    <!-- Ecosystem Metric Block Readouts -->
     <section class="metrics-bar">
         <div class="metric-pill">
             <span class="label">Acquisitions</span>
@@ -462,11 +471,9 @@
         </div>
     </section>
 
-    <!-- Central Interactive Board Array -->
-    <div class="container">
+    <main class="container">
 
-        <!-- Section: Acquisitions & Pipeline -->
-        <div class="grid-section section-group">
+        <section class="grid-section section-group">
             <div class="section-title">Acquisitions & Pipeline Architecture</div>
             <div class="hub-grid">
                 
@@ -478,7 +485,7 @@
                     <div class="card-footer">
                         <span class="badge">Intake Core</span>
                         <a href="https://swiftie83.github.io/SWIFT-LEAD-MANAGER-HUB-/" target="_blank" class="btn-link">
-                            Launch Hub <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Launch Hub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -491,7 +498,7 @@
                     <div class="card-footer">
                         <span class="badge">Acquisition Core</span>
                         <a href="https://swiftie83.github.io/Swift-Acquisition-Hub/" target="_blank" class="btn-link">
-                            Launch Hub <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Launch Hub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -504,16 +511,15 @@
                     <div class="card-footer">
                         <span class="badge">Sales Desk</span>
                         <a href="https://swiftie83.github.io/Swift-Seller-Negotiation-Dashboard/" target="_blank" class="btn-link">
-                            Open Desk <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Open Desk <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- Section: Underwriting & Evaluation -->
-        <div class="grid-section section-group">
+        <section class="grid-section section-group">
             <div class="section-title">Underwriting & Evaluation Portals</div>
             <div class="hub-grid">
 
@@ -525,7 +531,7 @@
                     <div class="card-footer">
                         <span class="badge">System CRM</span>
                         <a href="https://swiftie83.github.io/Swiftie83-Swift-Offer-CRM-V5/" target="_blank" class="btn-link">
-                            Launch CRM <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Launch CRM <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -538,7 +544,7 @@
                     <div class="card-footer">
                         <span class="badge">Underwriting</span>
                         <a href="https://swiftie83.github.io/Property-Offer-Worksheet/" target="_blank" class="btn-link">
-                            Run Numbers <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Run Numbers <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -551,16 +557,15 @@
                     <div class="card-footer">
                         <span class="badge">Lead Desk</span>
                         <a href="https://swiftie83.github.io/REI-Insider-Lead-Form/" target="_blank" class="btn-link">
-                            Open Form <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Open Form <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- Section: Dispositions -->
-        <div class="grid-section section-group">
+        <section class="grid-section section-group">
             <div class="section-title">Asset Dispositions & Clearing</div>
             <div class="hub-grid">
 
@@ -572,16 +577,15 @@
                     <div class="card-footer">
                         <span class="badge">Dispo Matrix</span>
                         <a href="https://swiftie83.github.io/Swift-Disposal-Hub/" target="_blank" class="btn-link">
-                            Launch Matrix <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Launch Matrix <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- Section: Strategy & Outreach Dominance -->
-        <div class="grid-section section-group">
+        <section class="grid-section section-group">
             <div class="section-title">Strategic Channels & Agent Outreach</div>
             <div class="hub-grid">
 
@@ -593,16 +597,15 @@
                     <div class="card-footer">
                         <span class="badge">Agent System</span>
                         <a href="https://swiftie83.github.io/SWIFT-A.G.E.N.T.-DOMINATION-/" target="_blank" class="btn-link">
-                            Deploy System <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Deploy System <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- Section: System Intelligence -->
-        <div class="grid-section section-group">
+        <section class="grid-section section-group">
             <div class="section-title">System Playbooks & Tactical Blueprints</div>
             <div class="hub-grid">
 
@@ -614,7 +617,7 @@
                     <div class="card-footer">
                         <span class="badge">SOP Manual</span>
                         <a href="https://swiftie83.github.io/TheSwiftplaybook/" target="_blank" class="btn-link">
-                            Open Playbook <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Open Playbook <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -627,7 +630,7 @@
                     <div class="card-footer">
                         <span class="badge">Sales Guide</span>
                         <a href="https://docs.google.com/document/d/1QWwFLUkfi3o2w2SMQVPMJ5NFdWA4Zpcs-36NOcgJgGA/edit?tab=t.0#heading=h.5h636usblbgq" target="_blank" class="btn-link">
-                            View Blueprint <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            View Blueprint <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
@@ -640,46 +643,50 @@
                     <div class="card-footer">
                         <span class="badge">EOD Log</span>
                         <a href="https://swiftie83.github.io/Swift-EOD-Report/" target="_blank" class="btn-link">
-                            Open Report <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                            Open Report <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                         </a>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-        <!-- Section: Future Allocations Expansion -->
-        <div class="grid-section">
+        <section class="grid-section">
             <div class="section-title">Future Expansion Allocations</div>
             <div class="hub-grid">
                 
-                <div class="hub-card future">
-                    <div class="future-card">
-                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        <span>Automated Dialer Node</span>
+                <div class="hub-card acquisition">
+                    <div class="card-content">
+                        <h3>PROPWIRE FOR LEAD GEN</h3>
+                        <p>Advanced property data search engine utilized to extract targeted owner lists, equity configurations, and off-market lead lists.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge">Data Engine</span>
+                        <a href="https://propwire.com/search?atclid=A4Cs3ckihtBSmT7kuoC5ib4pKDMHa9&filters=%7B%7D" target="_blank" class="btn-link">
+                            Launch Search <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        </a>
                     </div>
                 </div>
 
                 <div class="hub-card future">
                     <div class="future-card">
-                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                         <span>Legal Contract Library</span>
                     </div>
                 </div>
 
                 <div class="hub-card future">
                     <div class="future-card">
-                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                         <span>Market Analysis Radar</span>
                     </div>
                 </div>
 
             </div>
-        </div>
+        </section>
 
-    </div>
+    </main>
 
-    <!-- Corporate Operations Footer -->
     <footer>
         <div class="footer-content">
             <h4>Swift Equity Solutions LLC</h4>
@@ -698,43 +705,41 @@
         </div>
     </footer>
 
-    <!-- Instant Workspace Search Script Logic -->
     <script>
-        function filterWorkspace() {
-            let searchInput = document.getElementById('workspaceSearch').value.toLowerCase();
-            let cards = document.getElementsByClassName('hub-card');
-            let groups = document.getElementsByClassName('section-group');
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('workspaceSearch');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const filterValue = searchInput.value.toLowerCase().trim();
+                    const cards = document.querySelectorAll('.hub-card:not(.future)');
+                    const groups = document.querySelectorAll('.section-group');
 
-            // Handle App Cards Filtering
-            for (let i = 0; i < cards.length; i++) {
-                if (!cards[i].classList.contains('future')) {
-                    let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                    let desc = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-                    
-                    if (title.includes(searchInput) || desc.includes(searchInput)) {
-                        cards[i].style.display = "flex";
-                    } else {
-                        cards[i].style.display = "none";
-                    }
-                }
-            }
+                    // Filter matching cards using modern native hidden attributes
+                    cards.forEach(card => {
+                        const title = card.querySelector('h3')?.innerText.toLowerCase() || '';
+                        const desc = card.querySelector('p')?.innerText.toLowerCase() || '';
+                        
+                        if (title.includes(filterValue) || desc.includes(filterValue)) {
+                            card.removeAttribute('hidden');
+                        } else {
+                            card.setAttribute('hidden', '');
+                        }
+                    });
 
-            // Collapse rows completely if no visible matches exist
-            for (let j = 0; j < groups.length; j++) {
-                let innerCards = groups[j].getElementsByClassName('hub-card');
-                let validMatch = 0;
-                for (let k = 0; k < innerCards.length; k++) {
-                    if (innerCards[k].style.display !== 'none') {
-                        validMatch++;
-                    }
-                }
-                if (validMatch === 0 && searchInput !== "") {
-                    groups[j].style.display = 'none';
-                } else {
-                    groups[j].style.display = 'block';
-                }
+                    // Manage empty section container states cleanly
+                    groups.forEach(group => {
+                        const visibleCards = group.querySelectorAll('.hub-card:not(.future):not([hidden])');
+                        
+                        if (visibleCards.length === 0 && filterValue !== '') {
+                            group.setAttribute('hidden', '');
+                        } else {
+                            group.removeAttribute('hidden');
+                        }
+                    });
+                });
             }
-        }
+        });
     </script>
 
 </body>
